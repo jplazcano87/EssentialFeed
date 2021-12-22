@@ -15,13 +15,16 @@ public final class RemoteFeedLoader {
   
   private let url: URL
   private let client: HTTPClient
-  
+ 
+  public enum Error: Swift.Error {
+    case conectivity
+  }
   public init(url: URL, client: HTTPClient) {
     self.client = client
     self.url = url
   }
   
-  public func load() {
+  public func load(completion: (Error) -> Void = { _ in }) {
     client.get(from: url)
   }
   
