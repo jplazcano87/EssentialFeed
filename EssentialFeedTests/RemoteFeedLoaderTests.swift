@@ -52,17 +52,23 @@ class RemoteFeedLoaderTests: XCTestCase {
    }
    */
   
-  func test_load_deliversErrorOnClientError() {
+  func test_load_deliversErrorOnNon200HTTPResponse() {
     let (sut, client) = makeSUT()
     //create an array of error, because we can compare the type and the number of times that specific error ocurrs
-    var capturedErrors = [RemoteFeedLoader.Error]() // this array is for the capture
-    sut.load { capturedErrors.append($0) } // Appends from the closure
+
+   // Appends from the closure
+    let samples = [199, 201, 300, 400, 500]
     
-    client.complete(withStatusCode: 400)
-    XCTAssertEqual(capturedErrors, [.invalidData])
+    samples.enumerated().forEach { index, code in
+      var capturedErrors = [RemoteFeedLoader.Error]() // this array is for the capture
+      sut.load { capturedErrors.append($0) }
+      client.complete(withStatusCode: code, at: index)
+      XCTAssertEqual(capturedErrors, [.invalidData])
+    }
+    
   }
   
-  func test_load_deliversErrorOnNo200HTTPResponse() {
+  func test_load_deliversErrorOnClientError() {
     let (sut, client) = makeSUT()
     //create an array of error, because we can compare the type and the number of times that specific error ocurrs
     var capturedErrors = [RemoteFeedLoader.Error]() // this array is for the capture
