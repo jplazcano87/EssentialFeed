@@ -55,8 +55,8 @@ class RemoteFeedLoaderTests: XCTestCase {
   func test_load_deliversErrorOnNon200HTTPResponse() {
     let (sut, client) = makeSUT()
     //create an array of error, because we can compare the type and the number of times that specific error ocurrs
-
-   // Appends from the closure
+    
+    // Appends from the closure
     let samples = [199, 201, 300, 400, 500]
     
     samples.enumerated().forEach { index, code in
@@ -78,6 +78,18 @@ class RemoteFeedLoaderTests: XCTestCase {
     
     client.complete(with: clientError)
     XCTAssertEqual(capturedErrors, [.conectivity])
+  }
+  
+  func test_load_deliversErrorOn200HTTPResponseWithInvalidJson() {
+    let (sut, client) = makeSUT()
+    var capturedErrors = [RemoteFeedLoader.Error]() // this array is for the capture
+    sut.load { capturedErrors.append($0) }
+    
+    
+    let invalidJSON = Data("Invalid json".utf8)
+    client.complete(withStatusCode: 200, data: invalidJSON)
+    
+    XCTAssertEqual(capturedErrors, [.invalidData])
   }
   
   //Helpers
@@ -105,14 +117,14 @@ class RemoteFeedLoaderTests: XCTestCase {
       messages[index].completion(.failure(error))
     }
     
-    func complete(withStatusCode code: Int, at index: Int = 0) {
+    func complete(withStatusCode code: Int, data: Data = Data(), at index: Int = 0) {
       let response = HTTPURLResponse(
         url: requestedURLs[index],
         statusCode: code,
         httpVersion: nil,
         headerFields: nil
       )!
-      messages[index].completion(.success(response))
+      messages[index].completion(.success(data, response))
       
     }
   }
