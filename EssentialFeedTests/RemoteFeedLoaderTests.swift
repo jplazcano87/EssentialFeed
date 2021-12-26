@@ -40,23 +40,10 @@ class RemoteFeedLoaderTests: XCTestCase {
     XCTAssertEqual(client.requestedURLs, [url, url])
     
   }
-  /*
-   This test is using a property inyection into the client
-   func test_load_deliversErrorOnClientError() {
-   let (sut, client) = makeSUT()
-   client.error = NSError(domain: "A Error", code: 0)
-   //create an array of error, because we can compare the type and the number of times that specific error ocurrs
-   var capturedErrors = [RemoteFeedLoader.Error]() // this array is for the capture
-   sut.load { capturedErrors.append($0) } // Appends from the closure
-   XCTAssertEqual(capturedErrors, [.conectivity])
-   }
-   */
+
   
   func test_load_deliversErrorOnNon200HTTPResponse() {
     let (sut, client) = makeSUT()
-    //create an array of error, because we can compare the type and the number of times that specific error ocurrs
-    
-    // Appends from the closure
     let samples = [199, 201, 300, 400, 500]
     
     samples.enumerated().forEach { index, code in
@@ -69,7 +56,6 @@ class RemoteFeedLoaderTests: XCTestCase {
   
   func test_load_deliversErrorOnClientError() {
     let (sut, client) = makeSUT()
-    //create an array of error, because we can compare the type and the number of times that specific error ocurrs
     expect(sut, completeWithError: .conectivity) {
       let clientError = NSError(domain: "A Error", code: 0)
       client.complete(with: clientError)
@@ -85,6 +71,11 @@ class RemoteFeedLoaderTests: XCTestCase {
     } 
   }
   
+  func test_load_deliversNoItemsOn200HTTPResponseWithEmptyJSONList() {
+    let (sut, client) = makeSUT()
+    
+  }
+  
   //Helpers
   private func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
     let client = HTTPClientSpy()
@@ -94,10 +85,10 @@ class RemoteFeedLoaderTests: XCTestCase {
   
   private func expect(_ sut: RemoteFeedLoader, completeWithError error: RemoteFeedLoader.Error, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
     
-    var capturedErrors = [RemoteFeedLoader.Error]() // this array is for the capture
-    sut.load { capturedErrors.append($0) }
+    var capturedResults = [RemoteFeedLoader.Result]() // this array is for the capture
+    sut.load { capturedResults.append($0) }
     action()
-    XCTAssertEqual(capturedErrors, [error], file: file, line: line)
+    XCTAssertEqual(capturedResults, [.failure(error)], file: file, line: line)
   }
   
   
