@@ -79,6 +79,10 @@ class RemoteFeedLoaderTests: XCTestCase {
     }
   }
   
+  func test_load_deliversItemsOn200HTTPResponseWithValirJSONItems() {
+    let (sut, client) = makeSUT()
+  }
+  
   //Helpers
   private func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
     let client = HTTPClientSpy()
