@@ -83,14 +83,14 @@ class RemoteFeedLoaderTests: XCTestCase {
   func test_load_deliversItemsOn200HTTPResponseWithValirJSONItems() {
     let (sut, client) = makeSUT()
     let item1  = makeItem(id: UUID(),
-                         imageURL: URL(string: "https://a-url.com")!)
-
+                          imageURL: URL(string: "https://a-url.com")!)
+    
     
     let item2 = makeItem(id: UUID(),
                          description: "a description",
                          location: "a location",
                          imageURL: URL(string: "https://another-url.com")!)
-
+    
     let items = [item1.model, item2.model]
     expect(sut, completeWithResult: .sucesss(items)) {
       
@@ -101,10 +101,19 @@ class RemoteFeedLoaderTests: XCTestCase {
   }
   
   //Helpers
-  private func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
+  private func makeSUT(url: URL = URL(string: "https://a-url.com")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
     let client = HTTPClientSpy()
     let sut = RemoteFeedLoader(url: url, client: client)
+    trackForMemoryLeaks(sut)
+    trackForMemoryLeaks(client)
     return (sut, client)
+  }
+  
+  private func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
+    
+    addTeardownBlock { [weak instance] in
+      XCTAssertNil(instance, "Instance should have been deallocated, potencial memory leak", file: file, line: line)
+    }
   }
   
   
