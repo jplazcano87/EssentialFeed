@@ -38,7 +38,6 @@ internal final class FeedItemMapper {
           }
 
     return .sucesss(root.feed)
-    
   }
   
 }
