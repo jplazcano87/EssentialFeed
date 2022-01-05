@@ -17,6 +17,7 @@
 		22E79CAF2773A9D5009B0B0D /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E79CAE2773A9D5009B0B0D /* FeedItem.swift */; };
 		22E79CB12773AB8D009B0B0D /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E79CB02773AB8D009B0B0D /* FeedLoader.swift */; };
 		22E79CB52773C746009B0B0D /* RemoteFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E79CB42773C746009B0B0D /* RemoteFeedLoader.swift */; };
+		22F9A0B327851CF800A7A9E8 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F9A0B227851CF800A7A9E8 /* URLSessionHTTPClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,7 @@
 		22E79CAE2773A9D5009B0B0D /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 		22E79CB02773AB8D009B0B0D /* FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
 		22E79CB42773C746009B0B0D /* RemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoader.swift; sourceTree = "<group>"; };
+		22F9A0B227851CF800A7A9E8 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 				2233D75C277A86A400AF43A4 /* HTTPClient.swift */,
 				22E79CB42773C746009B0B0D /* RemoteFeedLoader.swift */,
 				2233D75E277A86F900AF43A4 /* FeedItemMapper.swift */,
+				22F9A0B227851CF800A7A9E8 /* URLSessionHTTPClient.swift */,
 			);
 			path = "Feed API";
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				22E79CB52773C746009B0B0D /* RemoteFeedLoader.swift in Sources */,
 				2233D75D277A86A400AF43A4 /* HTTPClient.swift in Sources */,
 				22E79CAF2773A9D5009B0B0D /* FeedItem.swift in Sources */,
+				22F9A0B327851CF800A7A9E8 /* URLSessionHTTPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
