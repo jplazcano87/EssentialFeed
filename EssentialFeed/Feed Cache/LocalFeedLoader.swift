@@ -36,6 +36,7 @@ public final class LocalFeedLoader {
       completion(error)
     }
   }
+  
 }
 private extension Array where Element == FeedItem {
   func toLocal() -> [LocalFeedItem] {
